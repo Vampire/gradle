@@ -20,9 +20,8 @@ import org.gradle.internal.file.FileType
 import org.gradle.internal.fingerprint.LineEndingSensitivity
 import org.gradle.internal.hash.Hashing
 import org.gradle.internal.snapshot.RegularFileSnapshot
-import org.junit.Rule
-import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
+import spock.lang.TempDir
 import spock.lang.Unroll
 
 import java.nio.charset.Charset
@@ -30,8 +29,8 @@ import java.nio.charset.Charset
 import org.gradle.api.internal.changedetection.state.LineEndingContentFixture as content
 
 class LineEndingNormalizingFileSystemLocationSnapshotHasherTest extends Specification {
-    @Rule
-    TemporaryFolder tempDir = new TemporaryFolder()
+    @TempDir
+    File tempDir
 
     @Unroll
     def "calculates hash for text file with #description"() {
@@ -142,7 +141,7 @@ class LineEndingNormalizingFileSystemLocationSnapshotHasherTest extends Specific
     }
 
     File file(String path) {
-        return tempDir.newFile(path)
+        return new File(tempDir, path)
     }
 
     RegularFileSnapshot snapshot(File file, FileType fileType = FileType.RegularFile) {
