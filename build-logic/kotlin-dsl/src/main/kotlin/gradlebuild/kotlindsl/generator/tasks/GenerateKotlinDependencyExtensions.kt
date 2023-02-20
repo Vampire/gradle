@@ -91,6 +91,17 @@ fun DependencyHandler.embeddedKotlin(module: String): Any =
 fun DependencyHandler.kotlin(module: String, version: String? = null): Any =
     "org.jetbrains.kotlin:kotlin-${'$'}module${'$'}{version?.let { ":${'$'}version" } ?: ""}"
 
+/**
+ * Applies the given Kotlin plugin [module] at the embedded version (currently _${embeddedKotlinVersion}_).
+ *
+ * For example: `plugins { embeddedKotlin("plugin.serialization") }`
+ *
+ * Visit the [plugin portal](https://plugins.gradle.org/search?term=org.jetbrains.kotlin) to see the list of available plugins.
+ *
+ * @param module simple name of the Kotlin Gradle plugin module, for example "jvm", "android", "kapt", "plugin.allopen" etc...
+ */
+fun PluginDependenciesSpec.embeddedKotlin(module: String): PluginDependencySpec =
+    id("org.jetbrains.kotlin.${'$'}module") version embeddedKotlinVersion
 
 /**
  * Applies the given Kotlin plugin [module].
